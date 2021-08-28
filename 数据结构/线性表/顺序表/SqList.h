@@ -1,7 +1,5 @@
 #include <stdio.h>
 
-using namespace std;
-
 // 顺序表中元素类型，这里定义为int
 typedef int ElemType;
 
