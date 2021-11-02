@@ -1,0 +1,53 @@
+
+semaphore empty = 1000;
+semaphore full = 0;
+semaphore mutex = 1;
+semaphore count = 0;
+semaphore lock = 1;
+semaphore mutex2 = 1;
+
+
+producer() {
+    while(1) {
+        生产一件产品;
+        P(empty);
+        P(mutex);
+        放入一件产品;
+        V(mutex);
+        V(full);
+    }
+}
+
+
+consumer() {
+    while(1) {
+        P(lock);
+        P(full);
+        P(mutex);
+        取走一件产品;
+        V(mutex);
+        V(empty);
+        消费这件产品;
+
+        count = (++count) % 10;
+        if(count == 0) {
+            V(lock);
+        }
+
+    }
+}
+
+consumerPro() {
+    while(1) {
+        P(mutex2);
+        for(int i = 0; i < 10; ++i) {
+            P(full);
+            P(mutex);
+            取走一件产品;
+            V(mutex);
+            V(empty);
+            消费这件产品;
+        }
+        V(mutex2);
+    }
+}

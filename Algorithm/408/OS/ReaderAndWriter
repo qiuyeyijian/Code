@@ -1,0 +1,32 @@
+int count  = 0;
+semaphore mutex = 1;
+semaphore rw = 1;
+
+writer() {
+    while(1) {
+        P(rw);
+        写文件
+        V(rw);
+    }
+}
+
+reader() {
+    while(1) {
+        P(mutex);
+        if(count == 0) {
+            P(rw);
+        }
+        count++;
+        V(mutex);
+
+        读文件
+
+        P(mutex);
+        count--;
+        if(count == 0) {
+            V(rw);
+        }
+        V(mutex);
+
+    }
+}

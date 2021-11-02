@@ -1,0 +1,42 @@
+semaphore boxAFull = x;
+semaphore boxBFull = y;
+semaphore boxAEmpty = M - x;
+semaphore boxBEmpty = N - y;
+semaphore mutex1 = 1;
+semaphore mutex2 = 1;
+
+A() {
+    while(1) {
+        P(boxAFull)
+        P(mutex1)
+        从A的信箱中取出一个邮件；
+        V(mutex1)
+        V(boxAEmpty)
+        回答问题并提出一个新问题；
+
+        P(boxBEmpty)
+        P(mutex2)
+        将新邮件放入B的信箱；
+        V(mutex2)
+        V(boxBFull)
+    }
+}
+
+
+B() {
+    while(1) {
+        P(boxBFull)
+        P(mutex2)
+        从B的信箱中取出一个邮件；
+        V(mutex2)
+        V(boxBEmpty)
+
+        回答问题并提出一个新问题；
+
+        P(boxAEmpty)
+        P(mutex1)
+        将新邮件放入A的信箱；
+        V(mutex1)
+        V(boxAFull)
+    }
+}
