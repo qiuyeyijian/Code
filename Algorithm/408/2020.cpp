@@ -2,19 +2,25 @@
 
 int abs(int a) { return a > 0 ? a : -a; }
 
+int getDis(int a, int b, int c) {
+  int t1 = a - b > 0 ? a - b : b - a;
+  int t2 = c - b > 0 ? c - b : b - c;
+  int t3 = a - c > 0 ? a - c : c - a;
+
+  return t1 + t2 + t3;
+}
+
 // 时间复杂度O(n^3)，空间复杂度O(1)
 void solve(int* arr1, int len1, int* arr2, int len2, int* arr3, int len3) {
   int ans = 65535;
   for (int i = 0; i < len1; ++i) {
     for (int j = 0; j < len2; ++j) {
       for (int k = 0; k < len3; ++k) {
-        int t = abs(arr1[i] - arr2[j]) + abs(arr1[i] - arr3[k]) +
-                abs(arr2[j] - arr3[k]);
-        if (t < ans) ans = t;
+        int t = getDis(arr1[i], arr2[j], arr3[k]);
+        if (ans > t) ans = t;
       }
     }
   }
-
   printf("%d\n", ans);
 }
 

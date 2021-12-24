@@ -1,32 +1,79 @@
-int midNum2(int* a, int* b, int n) {
-  int s1 = 0, d1 = n - 1, s2 = 0, d2 = n - 1;
-  int m1, m2;
+#include <stdio.h>
+#include <string.h>
 
-  while (s1 != d1 || s2 != d2) {
-    m1 = (s1 + d1) / 2;
-    m2 = (s2 + d2) / 2;
+#include <queue>
 
-    if (a[m1] == b[m2]) {
-      return a[m1];
-    } else if (a[m1] < b[m2]) {
-      if ((s1 + d1) % 2 == 0) {  // 元素个数为奇数
-        s1 = m1;                 // 保留中间点
-        d2 = m2;                 // 保留中间点
-      } else {                   // 元素个数为偶数
-        s1 = m1 + 1;             // 不保留中间点
-        d2 = m2;                 // 保留中间点
-      }
-    } else {
-      if ((s2 + d2) % 2 == 0) {  // 元素个数为奇数
-        s2 = m2;                 // 保留中间点
-        d1 = m1;                 // 保留中间点
-      } else {                   // 元素个数为偶数
-        s2 = m2 + 1;             // 不保留中间点
-        d1 = m1;                 // 保留中间点
-      }
+using namespace std;
+
+typedef struct node {
+  char data[10];  // 存储操作数或操作符
+  struct node *left, *right;
+} BTree;
+
+BTree* newNode(char* data) {
+  BTree* n = new BTree;
+  n->left = n->right = NULL;
+  strcpy(n->data, data);
+  return n;
+}
+
+// 层序遍历构建二叉树
+void init(BTree*& root, char data[][10], int len) {
+  queue<BTree**> qu;
+  qu.push(&root);
+
+  for (int i = 0; i < len; ++i) {
+    BTree** n = qu.front();
+    qu.pop();
+    // 如果和 ”#” 不相等
+    if (strcmp(data[i], "#") != 0) {
+      *n = newNode(data[i]);
+      qu.push(&(*n)->left);
+      qu.push(&(*n)->right);
     }
+  }
+}
 
-  }  // end of while
+// 先序遍历
+void preOrder(BTree* root) {
+  if (root == NULL) {
+    return;
+  }
 
-  return (a[s1] < b[s2]) ? a[s1] : b[s2];
+  printf("%s", root->data);
+  preOrder(root->left);
+  preOrder(root->right);
+}
+
+void solve(BTree* root) {
+  if (root == NULL) return;
+
+  if (root->left == NULL && root->right == NULL) {
+    printf("%s", root->data);
+  } else {
+    // if (layer > 1) printf("(");
+
+    printf("(");
+    solve(root->left);
+    printf("%s", root->data);
+    solve(root->right);
+    printf(")");
+
+    // if (layer > 1) printf(")");
+  }
+}
+
+int main() {
+  char arr[][10] = {"*", "+", "*", "a", "b", "c", "-", "#",
+                    "#", "#", "#", "#", "#", "#", "d"};
+
+  char arr1[][10] = {"+", "*", "-", "a", "b", "#", "-",
+                     "#", "#", "#", "#", "c", "d"};
+
+  char arr2[][10] = {"+", "a", "b"};
+  BTree* root = NULL;
+  init(root, arr2, 3);
+  // init(root, arr1, 13);
+
+  solve(root);
 }

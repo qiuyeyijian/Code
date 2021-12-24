@@ -2,13 +2,13 @@
 
 // 时间复杂度O(n)，空间复杂度O(1)
 int solve(int* arr1, int* arr2, int len) {
-  int p = 0, q = 0;  // 两个序列的下标
-  // 只需比较len-1次
-  for (int i = 0; i < len - 1; ++i) {
-    arr1[p] > arr2[q] ? q++ : p++;
+  int i = 0, j = 0;  // 两个序列的下标
+  // 只需比较len-1次, 找到第n个和第n+1个数
+  for (int k = 0; k < len - 1; ++k) {
+    arr1[i] > arr2[j] ? j++ : i++;
   }
   // 返回二者当中较小的，就是中位数
-  return arr1[p] > arr2[q] ? arr1[q] : arr2[p];
+  return arr1[i] > arr2[j] ? arr2[j] : arr1[i];
 }
 
 // 时间复杂度O(logn)，空间复杂度O(1)
@@ -49,7 +49,8 @@ int main() {
   int arr1[5] = {11, 13, 15, 17, 19};
   int arr2[5] = {2, 4, 6, 8, 20};
 
-  printf("%d", midNum(arr1, arr2, 5));
+  // printf("%d", midNum(arr1, arr2, 5));
+  printf("%d", solve(arr1, arr2, 5));
 
   return 0;
 }

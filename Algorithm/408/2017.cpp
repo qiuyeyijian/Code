@@ -54,7 +54,7 @@ void solve(BTree* root, int layer) {
   if (root->left == NULL && root->right == NULL) {
     printf("%s", root->data);
   } else {
-    // 若不是叶节点，且不是所处层数大于1，则需要加相应的括号
+    // 若不是叶节点，且所处层数大于1，则需要加相应的括号
     if (layer > 1) {
       printf("(");
     }

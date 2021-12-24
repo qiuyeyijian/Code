@@ -3,7 +3,7 @@
 void reverse(int* arr, int start, int end) {
   int temp = 0;
   // 交换前后对应元素实现逆置
-  while (start != end && start < end) {
+  while (start < end) {
     temp = arr[start];
     arr[start++] = arr[end];
     arr[end--] = temp;

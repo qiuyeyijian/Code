@@ -4,7 +4,7 @@
 void solve(int* arr, int len) {
   // 创建大小为n的辅助空间
   int* t = new int[len]{0};
-  int ans = 0;
+  int ans = -1;
 
   // 统计各元素出现次数
   for (int i = 0; i < len; ++i) {
@@ -13,10 +13,10 @@ void solve(int* arr, int len) {
 
   // 寻找出现次数最高的元素
   for (int i = 0; i < len; ++i) {
-    if (t[i] > ans) ans = t[i];
+    if (t[i] > len / 2) ans = i;
   }
 
-  printf("%d\n", ans > len / 2 ? ans : -1);
+  printf("%d\n", ans);
   delete t;
 }
 
@@ -47,15 +47,15 @@ void moleVote(int* arr, int len) {
 }
 
 int main() {
-  int arr1[8] = {0, 5, 5, 3, 5, 7, 5, 5};
+  int arr1[8] = {0, 0, 0, 0, 0, 7, 2, 2};
   int arr2[8] = {0, 5, 5, 3, 5, 1, 5, 7};
   int arr3[8] = {5, 5, 5, 5, 3, 3, 3, 3};
 
-  //   solve(arr1, 8);
-  //   solve(arr2, 8);
+  solve(arr1, 8);
+  solve(arr2, 8);
 
-  moleVote(arr1, 8);
-  moleVote(arr3, 8);
+  // moleVote(arr1, 8);
+  // moleVote(arr3, 8);
 
   return 0;
 }
