@@ -1,2 +1,0 @@
-if to_cert_init['issuer'] != cert_init['issuer'] and to_cert_init['issuer'].find("Let's Encrypt") == -1:
-if to_cert_init['issuer'] != cert_init['issuer'] and str(to_cert_init['issuer']).find("Let's Encrypt") == -1:
